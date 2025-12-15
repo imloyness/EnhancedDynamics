@@ -8,7 +8,7 @@ using UnityEngine;
 namespace EnhancedDynamics
 {
     // do not forget to change version here
-    [BepInPlugin("imloyness.enhanced.dynamics", "EnhancedDynamics", "1.01")]
+    [BepInPlugin("imloyness.enhanced.dynamics", "EnhancedDynamics", "1.2.0")]
     public class BasePlugin : BaseUnityPlugin
     {
         public static BepInEx.Logging.ManualLogSource logsblablabla = BepInEx.Logging.Logger.CreateLogSource("EnhancedDynamics");
@@ -22,8 +22,9 @@ namespace EnhancedDynamics
         public static ConfigEntry<bool> idleinhaleToggle;
         public static ConfigEntry<bool> VerticalCameraToggle;
 
-        
+
         //shared variables
+
         public static bool FrozenState_ED;
         public static bool SlippingState_ED;
         public static float Velocity_ED;
@@ -39,29 +40,40 @@ namespace EnhancedDynamics
             CameraBobbingToggle = Config.Bind("Camera", "Camera Bobbing Toggle", true, "Enable/Disable Camera Bobbing");
             idleinhaleToggle = Config.Bind("Camera", "Idle Inhale Toggle", true, "Enable/Disable Idle Inhale Animation (Requires Camera Bobbing to be enabled.)");
             VerticalCameraToggle = Config.Bind("Camera", "Vertical Camera Toggle", true, "Enable/Disable Vertical Camera");
+
+            GameDetector.DetectGame();
         }
 
         private IEnumerator Start()
         {
             yield return null;
-            yield return new WaitForSeconds(0.3f);
 
             var harmony = new Harmony("imloyness.enhanced.dynamics");
 
-            try
+            if (GameDetector.whatbbgame_ED == "bbp")
             {
-                harmony.PatchAll();
+                yield return new WaitForSeconds(0.3f); //wait for mtmapi and other plugins to load
+                harmony.PatchAll(typeof(CameraPatches_BBP));
+                harmony.PatchAll(typeof(NanaPeelPatches));
+                harmony.PatchAll(typeof(PlayerMovementPatches_BBP));
+                harmony.PatchAll(typeof(VerticalCameraFeature_BBP));
+                if (Chainloader.PluginInfos.ContainsKey("mtm101.rulerp.bbplus.baldidevapi"))
+                {
+                    logsblablabla.LogInfo("Enhanced Dynamics | MTM101BaldAPI detected, adding OptionsAPI integration.");
+                    MTMBald101APIIntegration.TryIntegrate();
+                }
             }
-            catch (System.Exception e)
+            if (GameDetector.whatbbgame_ED == "bbcr")
             {
-                logsblablabla.LogWarning("Enhanced Dynamics | Harmony patching failed: " + e.Message + ". Skipping patches.");
-                harmony.PatchAll(typeof(CameraPatches));
+                logsblablabla.LogWarning("Enhanced Dynamics | This plugin does not yet support BBCR, skip");
             }
-
-            if (Chainloader.PluginInfos.ContainsKey("mtm101.rulerp.bbplus.baldidevapi"))
+            else if (GameDetector.whatbbgame_ED == "bbc")
             {
-                logsblablabla.LogInfo("Enhanced Dynamics | MTM101BaldAPI detected, adding OptionsAPI integration.");
-                MTMBald101APIIntegration.TryIntegrate();
+                logsblablabla.LogWarning("Enhanced Dynamics | This plugin does not yet support BBC, skip");
+            }
+            else
+            {
+                logsblablabla.LogWarning("Enhanced Dynamics | Unsupported game, skip");
             }
 
             logsblablabla.LogInfo("Enhanced Dynamics | v1.01 | by imloyness | Loaded.");

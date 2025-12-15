@@ -4,7 +4,7 @@ using UnityEngine;
 namespace EnhancedDynamics
 {
     [HarmonyPatch]
-    public static class VerticalCameraFeature
+    public static class VerticalCameraFeature_BBP
     {
         public static float transitionProgress = 0f;
         private static float verticalRotation;

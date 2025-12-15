@@ -5,7 +5,7 @@ using Rewired;
 namespace EnhancedDynamics
 {
     [HarmonyPatch]
-    public static class CameraPatches
+    public static class CameraPatches_BBP
     {
         // FOV parameters
         public static float baseFOV => BasePlugin.FOVValue.Value;

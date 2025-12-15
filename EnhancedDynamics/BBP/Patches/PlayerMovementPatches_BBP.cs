@@ -4,13 +4,12 @@ using UnityEngine;
 namespace EnhancedDynamics
 {
     [HarmonyPatch]
-    public static class PlayerMovementPatches
+    public static class PlayerMovementPatches_BBP
     {
         [HarmonyPatch(typeof(PlayerMovement), "Update")]
         [HarmonyPostfix]
         public static void PostfixPlayerMovementUpdate(PlayerMovement __instance)
         {
-            BasePlugin.Velocity_ED = __instance.frameVelocity * 10f;
             BasePlugin.Stamina_ED = __instance.stamina;
         }
 
