@@ -7,8 +7,7 @@ using UnityEngine;
 
 namespace EnhancedDynamics
 {
-    // do not forget to change version here
-    [BepInPlugin("imloyness.enhanced.dynamics", "EnhancedDynamics", "1.2.0")]
+    [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
     public class BasePlugin : BaseUnityPlugin
     {
         public static BepInEx.Logging.ManualLogSource logsblablabla = BepInEx.Logging.Logger.CreateLogSource("EnhancedDynamics");
@@ -22,9 +21,12 @@ namespace EnhancedDynamics
         public static ConfigEntry<bool> idleinhaleToggle;
         public static ConfigEntry<bool> VerticalCameraToggle;
 
+        public static ConfigEntry<bool> FootstepSoundsToggle;
+
+        public static ConfigEntry<bool> DebugModeToggle;
+
 
         //shared variables
-
         public static bool FrozenState_ED;
         public static bool SlippingState_ED;
         public static float Velocity_ED;
@@ -40,13 +42,15 @@ namespace EnhancedDynamics
             CameraBobbingToggle = Config.Bind("Camera", "Camera Bobbing Toggle", true, "Enable/Disable Camera Bobbing");
             idleinhaleToggle = Config.Bind("Camera", "Idle Inhale Toggle", true, "Enable/Disable Idle Inhale Animation (Requires Camera Bobbing to be enabled.)");
             VerticalCameraToggle = Config.Bind("Camera", "Vertical Camera Toggle", true, "Enable/Disable Vertical Camera");
+
+            FootstepSoundsToggle = Config.Bind("Audio", "Footstep Sounds Toggle", true, "Enable/Disable Footstep Sounds");
         }
 
         private IEnumerator Start()
         {
             yield return null;
 
-            var harmony = new Harmony("imloyness.enhanced.dynamics");
+            var harmony = new Harmony(PluginInfo.PLUGIN_GUID);
 
             GameDetector.DetectGame();
             if (GameDetector.whatbbgame_ED == "bbp")
@@ -71,7 +75,7 @@ namespace EnhancedDynamics
                 logsblablabla.LogWarning("Enhanced Dynamics | This plugin does not yet support BBC, skip");
             }
 
-            logsblablabla.LogInfo("Enhanced Dynamics | v1.2.0 | by imloyness | Loaded.");
+            logsblablabla.LogInfo("Enhanced Dynamics | " + PluginInfo.PLUGIN_NAME + " v." + PluginInfo.PLUGIN_VERSION + " | hi");
         }
     }
 }
