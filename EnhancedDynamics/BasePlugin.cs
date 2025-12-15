@@ -40,8 +40,6 @@ namespace EnhancedDynamics
             CameraBobbingToggle = Config.Bind("Camera", "Camera Bobbing Toggle", true, "Enable/Disable Camera Bobbing");
             idleinhaleToggle = Config.Bind("Camera", "Idle Inhale Toggle", true, "Enable/Disable Idle Inhale Animation (Requires Camera Bobbing to be enabled.)");
             VerticalCameraToggle = Config.Bind("Camera", "Vertical Camera Toggle", true, "Enable/Disable Vertical Camera");
-
-            GameDetector.DetectGame();
         }
 
         private IEnumerator Start()
@@ -50,6 +48,7 @@ namespace EnhancedDynamics
 
             var harmony = new Harmony("imloyness.enhanced.dynamics");
 
+            GameDetector.DetectGame();
             if (GameDetector.whatbbgame_ED == "bbp")
             {
                 yield return new WaitForSeconds(0.3f); //wait for mtmapi and other plugins to load
@@ -71,12 +70,8 @@ namespace EnhancedDynamics
             {
                 logsblablabla.LogWarning("Enhanced Dynamics | This plugin does not yet support BBC, skip");
             }
-            else
-            {
-                logsblablabla.LogWarning("Enhanced Dynamics | Unsupported game, skip");
-            }
 
-            logsblablabla.LogInfo("Enhanced Dynamics | v1.01 | by imloyness | Loaded.");
+            logsblablabla.LogInfo("Enhanced Dynamics | v1.2.0 | by imloyness | Loaded.");
         }
     }
 }

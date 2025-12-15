@@ -1,4 +1,5 @@
 using MTM101BaldAPI.OptionsAPI;
+using MTM101BaldAPI.UI;
 using TMPro;
 using UnityEngine;
 
@@ -35,6 +36,11 @@ namespace EnhancedDynamics
 
         public override void Build()
         {
+            TextMeshProUGUI textMeshProUGUI = CreateText("VersionText", "\n<color=white>v1.2.0</color>", Vector3.zero, BaldiFonts.BoldComicSans12, TextAlignmentOptions.Center, new Vector2(300f, 30f), Color.white, false);
+            textMeshProUGUI.transform.SetParent(transform, false);
+            (textMeshProUGUI.transform as RectTransform).anchoredPosition = new Vector2(-160f, -165f);
+            textMeshProUGUI.gameObject.AddComponent<RainbowText>();
+
             FOVValue = CreateNewBar("fovValue", "Base FOV", "Base field of view value (default: 60)", 1, 3, Color.black);
             CameraBobbingIntensity = CreateNewBar("cameraBobbingIntensity", "Bobbing Intensity", "Adjusts the intensity of the camera bobbing effect", 2, 3, Color.black);
 
