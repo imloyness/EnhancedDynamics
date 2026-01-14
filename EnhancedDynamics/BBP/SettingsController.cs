@@ -113,6 +113,8 @@ namespace EnhancedDynamics
 
             page1.SetActive(true);
             page2.SetActive(false);
+            page3.SetActive(false);
+            page4.SetActive(false);
 
             StandardMenuButton leftBtn = CreateButton(() => SwitchPage(-1), menuArrowLeft, menuArrowLeftHighlight, "PrevPage", new Vector3(-75f, -150f, 0f));
             StandardMenuButton rightBtn = CreateButton(() => SwitchPage(1), menuArrowRight, menuArrowRightHighlight, "NextPage", new Vector3(75f, -150f, 0f));
