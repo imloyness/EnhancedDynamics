@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace EnhancedDynamics
+namespace EnhancedDynamics.BBP.Modules
 {
     public class RainbowText : MonoBehaviour
     {

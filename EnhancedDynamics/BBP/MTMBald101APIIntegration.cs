@@ -1,8 +1,7 @@
-using BepInEx;
 using MTM101BaldAPI.OptionsAPI;
 using UnityEngine;
 
-namespace EnhancedDynamics
+namespace EnhancedDynamics.BBP
 {
     internal static class MTMBald101APIIntegration
     {

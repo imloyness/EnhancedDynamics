@@ -1,9 +1,10 @@
 ﻿using BepInEx;
+using BepInEx.Bootstrap;
 using BepInEx.Configuration;
 using HarmonyLib;
-using BepInEx.Bootstrap;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace EnhancedDynamics
 {
@@ -25,7 +26,6 @@ namespace EnhancedDynamics
 
         public static ConfigEntry<bool> DebugModeToggle;
 
-
         //shared variables
         public static bool FrozenState_ED;
         public static bool SlippingState_ED;
@@ -46,6 +46,17 @@ namespace EnhancedDynamics
             FootstepSoundsToggle = Config.Bind("Audio", "Footstep Sounds Toggle", true, "Enable/Disable Footstep Sounds");
 
             DebugModeToggle = Config.Bind("Debug", "Debug Mode Toggle", PluginInfo.isTest, "funsies");
+
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            if (GameDetector.whatbbgame_ED == "bbp" && scene.name == "Game")
+            {
+                logsblablabla.LogInfo("trying to apply ui");
+                BBP.DebugUI.ApplyDebugUI();
+            }
         }
 
         private IEnumerator Start()
@@ -58,14 +69,14 @@ namespace EnhancedDynamics
             if (GameDetector.whatbbgame_ED == "bbp")
             {
                 yield return new WaitForSeconds(0.3f); //wait for mtmapi and other plugins to load
-                harmony.PatchAll(typeof(CameraPatches_BBP));
-                harmony.PatchAll(typeof(NanaPeelPatches));
-                harmony.PatchAll(typeof(PlayerMovementPatches_BBP));
-                harmony.PatchAll(typeof(VerticalCameraFeature_BBP));
+                harmony.PatchAll(typeof(BBP.Patches.CameraPatches_BBP));
+                harmony.PatchAll(typeof(BBP.Patches.NanaPeelPatches));
+                harmony.PatchAll(typeof(BBP.Patches.PlayerMovementPatches_BBP));
+                harmony.PatchAll(typeof(BBP.Patches.VerticalCameraFeature_BBP));
                 if (Chainloader.PluginInfos.ContainsKey("mtm101.rulerp.bbplus.baldidevapi"))
                 {
                     logsblablabla.LogInfo("Enhanced Dynamics | MTM101BaldAPI detected, adding OptionsAPI integration.");
-                    MTMBald101APIIntegration.TryIntegrate();
+                    BBP.MTMBald101APIIntegration.TryIntegrate();
                 }
             }
             if (GameDetector.whatbbgame_ED == "bbcr")

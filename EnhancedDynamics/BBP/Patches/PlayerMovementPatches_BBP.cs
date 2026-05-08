@@ -1,7 +1,6 @@
 using HarmonyLib;
-using UnityEngine;
 
-namespace EnhancedDynamics
+namespace EnhancedDynamics.BBP.Patches
 {
     [HarmonyPatch]
     public static class PlayerMovementPatches_BBP
