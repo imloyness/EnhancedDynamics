@@ -59,7 +59,7 @@ namespace EnhancedDynamics
             PostProcessingToggle = Config.Bind("PostProcessing", "Post Processing Toggle", true, "Enable/Disable Graphical Enhancments.");
             BloomIntensity = Config.Bind("PostProcessing", "Bloom Intensity", 1, "Strength of the bloom/glow effect");
             VignetteIntensity = Config.Bind("PostProcessing", "Vignette Intensity", 1, "Darkens the screen edges");
-            ChromaticAberrationIntensity = Config.Bind("PostProcessing", "Chromatic Aberration", 4, "Color fringing effect");
+            ChromaticAberrationIntensity = Config.Bind("PostProcessing", "Chromatic Aberration", 2, "Color fringing effect");
             GrainIntensity = Config.Bind("PostProcessing", "Film Grain", 2, "Film grain intensity");
             MotionBlurIntensity = Config.Bind("PostProcessing", "Motion Blur", 2, "Motion Blur intensity");
 
@@ -90,7 +90,7 @@ namespace EnhancedDynamics
             GameDetector.DetectGame();
             if (GameDetector.whatbbgame_ED == "bbp")
             {
-                yield return new WaitForSeconds(0.3f);
+                yield return new WaitForSeconds(1f);
                 harmony.PatchAll(typeof(BBP.Patches.CameraPatches_BBP));
                 harmony.PatchAll(typeof(BBP.Patches.NanaPeelPatches));
                 harmony.PatchAll(typeof(BBP.Patches.PlayerMovementPatches_BBP));

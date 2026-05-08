@@ -31,8 +31,6 @@ namespace EnhancedDynamics.BBP
             if (scene.name != "Game")
                 return;
 
-            if (scene.name == "MainMenu") return;
-
             if (IsEnabled)
                 BasePlugin.Instance.StartCoroutine(ApplyPostProcessing());
         }
@@ -50,10 +48,22 @@ namespace EnhancedDynamics.BBP
                 globalVolume.profile = ScriptableObject.CreateInstance<VolumeProfile>();
             }
 
-            var cameraData = Camera.main?.GetComponent<UniversalAdditionalCameraData>();
-            if (cameraData != null)
+            Camera[] allCameras = Object.FindObjectsByType<Camera>(FindObjectsSortMode.None);
+
+            foreach (Camera cam in allCameras)
             {
-                cameraData.renderPostProcessing = true;
+                if (cam.name != "MainCamera" && cam.name != "BillboardCamera") 
+                {
+                    continue;
+                }
+
+                var cameraData = cam.GetUniversalAdditionalCameraData();
+
+                if (cameraData != null)
+                {
+                    cameraData.renderPostProcessing = true;
+                    BasePlugin.logsblablabla.LogInfo($"Enhanced Dynamics | Enabled Post-Processing on: {cam.name}");
+                }
             }
 
             var profile = globalVolume.profile;
@@ -71,7 +81,11 @@ namespace EnhancedDynamics.BBP
 
         public static void RefreshEffects()
         {
-            
+            if (globalVolume == null)
+            {
+                return;
+            }
+
             globalVolume.enabled = IsEnabled;
 
             if (!IsEnabled) return;
