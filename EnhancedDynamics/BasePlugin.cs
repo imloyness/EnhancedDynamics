@@ -26,10 +26,12 @@ namespace EnhancedDynamics
         public static ConfigEntry<bool> VerticalCameraToggle;
 
         public static ConfigEntry<bool> PostProcessingToggle;
-        public static ConfigEntry<float> BloomIntensity;
-        public static ConfigEntry<float> VignetteIntensity;
-        public static ConfigEntry<float> ChromaticAberrationIntensity;
-        public static ConfigEntry<float> GrainIntensity;
+        public static ConfigEntry<int> BloomIntensity;
+        public static ConfigEntry<int> VignetteIntensity;
+        public static ConfigEntry<int> MotionBlurIntensity;
+        
+        public static ConfigEntry<int> ChromaticAberrationIntensity;
+        public static ConfigEntry<int> GrainIntensity;
 
         //public static ConfigEntry<bool> FootstepSoundsToggle;
 
@@ -55,10 +57,11 @@ namespace EnhancedDynamics
             VerticalCameraToggle = Config.Bind("Camera", "Vertical Camera Toggle", true, "Enable/Disable Vertical Camera");
 
             PostProcessingToggle = Config.Bind("PostProcessing", "Post Processing Toggle", true, "Enable/Disable Graphical Enhancments.");
-            BloomIntensity = Config.Bind("PostProcessing", "Bloom Intensity", 2.5f, new ConfigDescription("Strength of the bloom/glow effect", new AcceptableValueRange<float>(0f, 10f)));
-            VignetteIntensity = Config.Bind("PostProcessing", "Vignette Intensity", 0.4f, new ConfigDescription("Darkens the screen edges", new AcceptableValueRange<float>(0f, 1f)));
-            ChromaticAberrationIntensity = Config.Bind("PostProcessing", "Chromatic Aberration", 0.3f, new ConfigDescription("Color fringing effect", new AcceptableValueRange<float>(0f, 1f)));
-            GrainIntensity = Config.Bind("PostProcessing", "Film Grain", 0.15f, new ConfigDescription("Film grain intensity", new AcceptableValueRange<float>(0f, 1f)));
+            BloomIntensity = Config.Bind("PostProcessing", "Bloom Intensity", 1, "Strength of the bloom/glow effect");
+            VignetteIntensity = Config.Bind("PostProcessing", "Vignette Intensity", 1, "Darkens the screen edges");
+            ChromaticAberrationIntensity = Config.Bind("PostProcessing", "Chromatic Aberration", 4, "Color fringing effect");
+            GrainIntensity = Config.Bind("PostProcessing", "Film Grain", 2, "Film grain intensity");
+            MotionBlurIntensity = Config.Bind("PostProcessing", "Motion Blur", 2, "Motion Blur intensity");
 
             //FootstepSoundsToggle = Config.Bind("Audio", "Footstep Sounds Toggle", true, "Enable/Disable Footstep Sounds");
 

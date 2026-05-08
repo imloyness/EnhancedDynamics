@@ -14,11 +14,11 @@ namespace EnhancedDynamics.BBP
         private static bool initialized = false;
 
         public static bool IsEnabled => BasePlugin.PostProcessingToggle.Value;
-        public static float BloomVal => BasePlugin.BloomIntensity.Value;
-        public static float VignetteVal => BasePlugin.VignetteIntensity.Value;
-        public static float CAVal => BasePlugin.ChromaticAberrationIntensity.Value;
-        public static float GrainVal => BasePlugin.GrainIntensity.Value;
-
+        public static float BloomVal => Mathf.Clamp01(BasePlugin.BloomIntensity.Value / 5f);
+        public static float VignetteVal => Mathf.Clamp01(BasePlugin.VignetteIntensity.Value / 5f);
+        public static float CAVal => Mathf.Clamp01(BasePlugin.ChromaticAberrationIntensity.Value / 5f);
+        public static float GrainVal => Mathf.Clamp01(BasePlugin.GrainIntensity.Value / 5f);
+        public static float MotionVal => Mathf.Clamp01(BasePlugin.MotionBlurIntensity.Value / 5f);
         public static void Initialize()
         {
             if (initialized) return;
@@ -28,7 +28,7 @@ namespace EnhancedDynamics.BBP
 
         private static void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            if (GameDetector.whatbbgame_ED != "bbp" || scene.name != "Game")
+            if (scene.name != "Game")
                 return;
 
             if (scene.name == "MainMenu") return;
@@ -58,6 +58,7 @@ namespace EnhancedDynamics.BBP
 
             var profile = globalVolume.profile;
 
+            if (!profile.Has<MotionBlur>()) profile.Add<MotionBlur>(true);
             if (!profile.Has<Bloom>()) profile.Add<Bloom>(true);
             if (!profile.Has<Vignette>()) profile.Add<Vignette>(true);
             if (!profile.Has<ChromaticAberration>()) profile.Add<ChromaticAberration>(true);
@@ -77,11 +78,18 @@ namespace EnhancedDynamics.BBP
 
             var profile = globalVolume.profile;
 
+            if (profile.TryGet(out MotionBlur mb))
+            {
+                mb.active = true;
+                mb.intensity.Override(1f);
+            }
+
             if (profile.TryGet(out Bloom bloom))
             {
                 bloom.active = true;
                 bloom.intensity.Override(BloomVal);
-                bloom.threshold.Override(1.1f);
+                bloom.threshold.Override(5.1f);
+                bloom.scatter.Override(0.5f);
             }
 
             if (profile.TryGet(out Vignette vignette))

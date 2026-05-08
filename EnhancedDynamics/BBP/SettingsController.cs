@@ -13,6 +13,10 @@ namespace EnhancedDynamics.BBP
         public bool idleInhaleToggle;
         public bool verticalCameraToggle;
         public bool postProcessingToggle;
+        public int bloomValue;
+        public int vignetteValue;
+        public int motionblurValue;
+
         public int fovValue;
         public int cameraBobbingIntensity;
         public bool debugModeToggle;
@@ -27,6 +31,9 @@ namespace EnhancedDynamics.BBP
             cameraBobbingIntensity = BasePlugin.CameraBobbingIntensity.Value;
             debugModeToggle = BasePlugin.DebugModeToggle.Value;
             postProcessingToggle = BasePlugin.PostProcessingToggle.Value;
+            bloomValue = BasePlugin.BloomIntensity.Value;
+            vignetteValue = BasePlugin.VignetteIntensity.Value;
+            motionblurValue = BasePlugin.MotionBlurIntensity.Value;
         }
     }
 
@@ -47,6 +54,8 @@ namespace EnhancedDynamics.BBP
         private MenuToggle PostProcessing;
         private AdjustmentBars BloomBar;
         private AdjustmentBars VignetteBar;
+        private AdjustmentBars MotionBlurBar;
+        
 
         public override void Build()
         {
@@ -98,15 +107,17 @@ namespace EnhancedDynamics.BBP
             VerticalCamera.transform.SetParent(page2.transform, true);
 
             // Page 3: Post-Processing
-            PostProcessing = CreateNewToggle("postProcessingToggle", "Post Processing", "Enable advanced graphical effects", 2);
+            PostProcessing = CreateNewToggle("postProcessingToggle", "Post Processing", "Enable advanced graphical effects", 1);
             PostProcessing.transform.SetParent(page3.transform, true);
+
+            MotionBlurBar = CreateNewBar("MotionBlurIntensity", "Motion Blur", "Adjust how smooth frames are", 3, 5, Color.black);
+            MotionBlurBar.transform.SetParent(page3.transform, true);
 
             BloomBar = CreateNewBar("bloomIntensity", "Bloom", "Adjust the glow intensity", 4, 5, Color.black);
             BloomBar.transform.SetParent(page3.transform, true);
 
             VignetteBar = CreateNewBar("vignetteIntensity", "Vignette", "Adjust edge darkening", 5, 5, Color.black);
             VignetteBar.transform.SetParent(page3.transform, true);
-
             // Page 4: Debug-related
             DebugMode = CreateNewToggle("debugModeToggle", "Debug Mode", "(Does nothing for now)", 1);
             DebugMode.transform.SetParent(page4.transform, true);
@@ -120,6 +131,9 @@ namespace EnhancedDynamics.BBP
             FOVValue.Adjust(DefaultCategorySettings.Instance.fovValue);
             CameraBobbingIntensity.Adjust(DefaultCategorySettings.Instance.cameraBobbingIntensity);
             PostProcessing.Set(DefaultCategorySettings.Instance.postProcessingToggle);
+            BloomBar.Adjust(DefaultCategorySettings.Instance.bloomValue);
+            VignetteBar.Adjust(DefaultCategorySettings.Instance.vignetteValue);
+            MotionBlurBar.Adjust(DefaultCategorySettings.Instance.motionblurValue);
 
             page1.SetActive(true);
             page2.SetActive(false);
@@ -156,6 +170,7 @@ namespace EnhancedDynamics.BBP
             BasePlugin.PostProcessingToggle.Value = PostProcessing.Value;
             BasePlugin.VignetteIntensity.Value = VignetteBar.GetRaw();
             BasePlugin.BloomIntensity.Value = BloomBar.GetRaw();
+            BasePlugin.MotionBlurIntensity.Value = MotionBlurBar.GetRaw();
 
             PostProcessing_BBP.RefreshEffects();
         }
