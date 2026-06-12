@@ -1,7 +1,6 @@
 using HarmonyLib;
-using BepInEx;
 
-namespace EnhancedDynamics
+namespace EnhancedDynamics.BBP.Patches
 {
     [HarmonyPatch]
     public static class NanaPeelPatches

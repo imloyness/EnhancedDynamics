@@ -1,8 +1,8 @@
-using UnityEngine;
 using HarmonyLib;
 using Rewired;
+using UnityEngine;
 
-namespace EnhancedDynamics
+namespace EnhancedDynamics.BBP.Patches
 {
     [HarmonyPatch]
     public static class CameraPatches_BBP
@@ -25,11 +25,11 @@ namespace EnhancedDynamics
         public static float timer = 0f;
         public static Vector3 lastBobOffset = Vector3.zero;
 
-        // Idle inhale parameters (separate for continuous animation)
+        // Idle inhale parameters
         public static float idleInhaleTimer = 0f;
-        public static float idleInhaleSpeed = 1.5f; // Slower for breathing-like effect, adjust as needed
+        public static float idleInhaleSpeed = 1.5f;
         public static float lastIdleOffset = 0f;
-        public static float idleTransitionSpeed = 8f; // Smooth transition in/out
+        public static float idleTransitionSpeed = 8f;
 
         //toggles
         public static bool toggleFOV => BasePlugin.FOVToggle.Value;
@@ -48,7 +48,7 @@ namespace EnhancedDynamics
 
             return new Vector3(rotatedX, verticalBob, rotatedZ);
         }
-        
+
         public static float CalculateIdleInhale()
         {
             return Mathf.Sin(idleInhaleTimer * idleInhaleSpeed) * (convertedBobAm * 0.2f);
