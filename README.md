@@ -44,5 +44,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Credits
 
 [ThePartynoob](https://gamebanana.com/members/1882086) - Helping out with some code
+
 [nikilolllz](https://gamebanana.com/members/4916342) - Mod idea
+
 [MikeieYT](https://gamebanana.com/members/4780379) - Post-Processing idea
