@@ -1,7 +1,7 @@
 using HarmonyLib;
 using UnityEngine;
 
-namespace EnhancedDynamics
+namespace EnhancedDynamics.BBP.Patches
 {
     [HarmonyPatch]
     public static class VerticalCameraFeature_BBP
@@ -20,7 +20,7 @@ namespace EnhancedDynamics
             {
                 //da calculations and logic
                 int num = __instance.pm.reversed ? -1 : 1;
-                
+
                 bool flag = !Singleton<PlayerFileManager>.Instance.authenticMode;
                 Vector2 vector;
                 Vector2 vector2;
