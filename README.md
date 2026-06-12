@@ -6,9 +6,10 @@ A mod for Baldi's Basics Plus that enhances the game's dynamic, making the gamep
 
 ## Features
 
-- **Customizable Base FOV:** Adjust the base field of view to your preference (default: 60)
-- **Dynamic FOV Transitions:** Enable smooth FOV transitions while running to create a more intense gameplay experience
-- **Camera Bobbing:** just like in minecraft lol
+- **Customizable FOV**
+- **Camera Effects**
+- **Camera Bobbing**
+- **Post-Processing**
 
 ## Installation
 
@@ -18,24 +19,23 @@ A mod for Baldi's Basics Plus that enhances the game's dynamic, making the gamep
 
 ## Configuration Options
 
-### FOV Transitions
-When enabled, this feature increases your FOV on sprint, creating a more dynamic and intense feel to the movement.
+### Camera Settings:
+You can configure such things as: FOV, Bobbing, Idle Inhale, Vertical Camera and FOV Effects.
 
-### Base FOV
-There are 4 FOV levels (30(0), 60(1), 90(2) and 120(3))
+### Post-Processing
+`DISCLAIMER: This category is graphically heavy to turn on. Be sure to have a computer with Discreete GPU with Vulkan or DirectX 11/12 or Metal.`
 
-### Camera Bobbing and intensity
-You can toggle and configure it from 0.25 by default to 1 max
+You can configure some effects that you gonna see, no more need to photoshop you're thumbnails! `Graysland... /j`
 
 ## Reqirements
 
-- Baldi's Basics Plus
-- BepInEx
-- MTM101BaldAPI (Optional)
+- [Baldi's Basics Plus](https://www.basicallygames.com/baldis-basics-plus)
+- [BepInEx](https://github.com/BepInEx/BepInEx)
+- [MTM101BaldAPI](https://gamebanana.com/mods/383711) (Optional)
 
 ## Bug Reports and Feedback
 
-If you encounter any issues or have suggestions, please open an issue on the GitHub repository.
+If you encounter any issues or have suggestions, please report here: https://gitlab.com/imloyness/EnhancedDynamics/-/work_items
 
 ## License
 
@@ -43,4 +43,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Credits
 
-@ThePartynoob - Helping out with some code
+[ThePartynoob](https://gamebanana.com/members/1882086) - Helping out with some code
+[nikilolllz](https://gamebanana.com/members/4916342) - Mod idea
+[MikeieYT](https://gamebanana.com/members/4780379) - Post-Processing idea

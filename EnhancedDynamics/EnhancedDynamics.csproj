@@ -17,6 +17,7 @@
 
   <!-- build this here right into my game folder -->
   <Target Name="PostBuildCopy" AfterTargets="Build">
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="..\gitlab\Releases"/>
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="C:\Program Files (x86)\Steam\steamapps\common\Baldi's Basics Plus\BepInEx\plugins"/>
   </Target>
   
@@ -24,9 +25,6 @@
   <ItemGroup>
     <!-- some stuff added by myself -->
     <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.2" PrivateAssets="all" />
-    <Reference Include="BaldiTexturePacks">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Baldi's Basics Plus\BepInEx\plugins\BaldiTexturePacks.dll</HintPath>
-    </Reference>
     <Reference Include="MTM101BaldAPI">
       <HintPath>..\Managed\BBP Dependencies\MTM101BaldAPI.dll</HintPath>
     </Reference>
