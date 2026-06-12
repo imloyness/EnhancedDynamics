@@ -31,7 +31,7 @@ namespace EnhancedDynamics
                     }
                     else if (GameName.IndexOf("Classic Remastered", StringComparison.OrdinalIgnoreCase) >= 0)
                     {
-                        whatbbgame_ED = "bbcr";
+                        whatbbgame_ED = "bbieal";
                     }
                     else if (GameName.IndexOf("In Education and Learning", StringComparison.OrdinalIgnoreCase) >= 0)
                     {
