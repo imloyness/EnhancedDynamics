@@ -8,14 +8,15 @@ namespace EnhancedDynamics.BBP
         public static void TryIntegrate()
         {
             var singletonThing = new GameObject("randomSingleton");
-            singletonThing.AddComponent<DefaultCategorySettings>();
-
+            singletonThing.AddComponent<DefaultGeneralSettings>();
+            
             CustomOptionsCore.OnMenuInitialize += AddCategory;
         }
 
         static void AddCategory(OptionsMenu __instance, CustomOptionsHandler handler)
         {
-            handler.AddCategory<CategorySettings>("Enhanced\nDynamics");
+            handler.AddCategory<GeneralSettings>("Enhanced\nDynamics");
+            handler.AddCategory<PostProcessingSettings>("Post\nProcessing");
         }
     }
 }

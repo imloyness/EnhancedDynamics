@@ -26,8 +26,6 @@ namespace EnhancedDynamics.BBP
         {
             void Update()
             {
-                if (debugText == null) return;
-
                 string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
         
                 debugText.text = $"<color=#FFFFFF80>ED v.{PluginInfo.PLUGIN_VERSION}</color>\n" +

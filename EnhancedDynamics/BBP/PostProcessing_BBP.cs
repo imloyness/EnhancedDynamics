@@ -31,8 +31,7 @@ namespace EnhancedDynamics.BBP
             if (scene.name != "Game")
                 return;
 
-            if (IsEnabled)
-                BasePlugin.Instance.StartCoroutine(ApplyPostProcessing());
+            BasePlugin.Instance.StartCoroutine(ApplyPostProcessing());
         }
 
         private static IEnumerator ApplyPostProcessing()

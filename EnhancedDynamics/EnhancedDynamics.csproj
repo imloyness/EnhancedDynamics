@@ -17,7 +17,7 @@
 
   <!-- build this here right into my game folder -->
   <Target Name="PostBuildCopy" AfterTargets="Build">
-    <Copy SourceFiles="$(TargetPath)" DestinationFolder="/home/loyness/.local/share/Steam/steamapps/common/Baldi's Basics Plus/BepInEx/plugins"/>
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="C:\Program Files (x86)\Steam\steamapps\common\Baldi's Basics Plus\BepInEx\plugins"/>
   </Target>
   
 
@@ -25,13 +25,13 @@
     <!-- some stuff added by myself -->
     <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.2" PrivateAssets="all" />
     <Reference Include="MTM101BaldAPI">
-      <HintPath>../Managed/BBP Dependencies/MTM101BaldAPI.dll</HintPath>
+      <HintPath>..\Managed\BBP Dependencies\MTM101BaldAPI.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>../Managed/BBP Dependencies/Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\Managed\BBP Dependencies\Newtonsoft.Json.dll</HintPath>
     </Reference>
     
-    <Reference Include="../Managed/Assembly-CSharp.dll" Publicize="true" />
+    <Reference Include="..\Managed\Assembly-CSharp.dll" Publicize="true" />
   </ItemGroup>
   
   <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
@@ -41,49 +41,49 @@
   <!-- bbp dependencies stuff -->
   <ItemGroup>
     <Reference Include="0Harmony">
-      <HintPath>../Managed/0Harmony.dll</HintPath>
+      <HintPath>..\Managed/0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="AlmostEngine">
-      <HintPath>../Managed/AlmostEngine.dll</HintPath>
+      <HintPath>..\Managed/AlmostEngine.dll</HintPath>
     </Reference>
     <Reference Include="AlmostEngine.Shared">
-      <HintPath>../Managed/AlmostEngine.Shared.dll</HintPath>
+      <HintPath>..\Managed\AlmostEngine.Shared.dll</HintPath>
     </Reference>
     <Reference Include="BepInEx">
-      <HintPath>../Managed/BepInEx.dll</HintPath>
+      <HintPath>..\Managed\BepInEx.dll</HintPath>
     </Reference>
     <Reference Include="BepInEx.Harmony">
-      <HintPath>../Managed/BepInEx.Harmony.dll</HintPath>
+      <HintPath>..\Managed\BepInEx.Harmony.dll</HintPath>
     </Reference>
     <Reference Include="BepInEx.Preloader">
-      <HintPath>../Managed/BepInEx.Preloader.dll</HintPath>
+      <HintPath>..\Managed\BepInEx.Preloader.dll</HintPath>
     </Reference>
     <Reference Include="Rewired_Core">
-      <HintPath>../Managed/Rewired_Core.dll</HintPath>
+      <HintPath>..\Managed\Rewired_Core.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>../Managed/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>..\Managed\Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>../Managed/UnityEngine.dll</HintPath>
+      <HintPath>..\Managed\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>../Managed/UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>..\Managed\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>../Managed/UnityEngine.UI.dll</HintPath>
+      <HintPath>..\Managed\UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
-      <HintPath>../Managed/UnityEngine.TextRenderingModule.dll</HintPath>
+      <HintPath>..\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UIModule">
-      <HintPath>../Managed/UnityEngine.UIModule.dll</HintPath>
+      <HintPath>..\Managed\UnityEngine.UIModule.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Runtime">
-      <HintPath>../Managed/Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
+      <HintPath>..\Managed\Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Runtime">
-      <HintPath>../Managed/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+      <HintPath>..\Managed\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>
