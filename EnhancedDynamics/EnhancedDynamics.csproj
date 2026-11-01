@@ -17,10 +17,10 @@
 
   <!-- build this here right into my game folder -->
   <Target Name="PostBuildCopy" AfterTargets="Build">
-    <Copy SourceFiles="$(TargetPath)" DestinationFolder="..\gitlab\Releases"/>
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="..\.github\Releases"/>
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="C:\Program Files (x86)\Steam\steamapps\common\Baldi's Basics Plus\BepInEx\plugins"/>
   </Target>
-  
+
 
   <ItemGroup>
     <!-- some stuff added by myself -->
@@ -31,10 +31,10 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\Managed\BBP Dependencies\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    
+
     <Reference Include="..\Managed\Assembly-CSharp.dll" Publicize="true" />
   </ItemGroup>
-  
+
   <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all" />
   </ItemGroup>
