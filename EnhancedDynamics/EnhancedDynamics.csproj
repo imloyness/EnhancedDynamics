@@ -9,6 +9,9 @@
     <Configurations>Debug;Release;Cheat</Configurations>
     <AssemblyVersion></AssemblyVersion>
     <FileVersion></FileVersion>
+
+    <!-- PUT THE GAME DIRECTORY HERE -->
+    <GamePath>D:\SteamLibrary\steamapps\common\Baldi's Basics Plus</GamePath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Cheat|AnyCPU'">
@@ -18,21 +21,20 @@
   <!-- build this here right into my game folder -->
   <Target Name="PostBuildCopy" AfterTargets="Build">
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="..\.github\Releases"/>
-    <Copy SourceFiles="$(TargetPath)" DestinationFolder="C:\Program Files (x86)\Steam\steamapps\common\Baldi's Basics Plus\BepInEx\plugins"/>
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(GamePath)\BepInEx\plugins\"/>
   </Target>
-
 
   <ItemGroup>
     <!-- some stuff added by myself -->
     <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.2" PrivateAssets="all" />
     <Reference Include="MTM101BaldAPI">
-      <HintPath>..\Managed\BBP Dependencies\MTM101BaldAPI.dll</HintPath>
+      <HintPath>$(GamePath)\BepInEx\plugins\MTM101BaldAPI.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\Managed\BBP Dependencies\Newtonsoft.Json.dll</HintPath>
+      <HintPath>$(GamePath)\BepInEx\plugins\Newtonsoft.Json.dll</HintPath>
     </Reference>
 
-    <Reference Include="..\Managed\Assembly-CSharp.dll" Publicize="true" />
+    <Reference Include="$(GamePath)\BALDI_Data\Managed\Assembly-CSharp.dll" Publicize="true" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
@@ -42,49 +44,49 @@
   <!-- bbp dependencies stuff -->
   <ItemGroup>
     <Reference Include="0Harmony">
-      <HintPath>..\Managed/0Harmony.dll</HintPath>
+      <HintPath>$(GamePath)\BepInEx\core\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="AlmostEngine">
-      <HintPath>..\Managed/AlmostEngine.dll</HintPath>
+      <HintPath>$(GamePath)\BepInEx\core\AlmostEngine.dll</HintPath>
     </Reference>
     <Reference Include="AlmostEngine.Shared">
-      <HintPath>..\Managed\AlmostEngine.Shared.dll</HintPath>
+      <HintPath>$(GamePath)\BepInEx\core\AlmostEngine.Shared.dll</HintPath>
     </Reference>
     <Reference Include="BepInEx">
-      <HintPath>..\Managed\BepInEx.dll</HintPath>
+      <HintPath>$(GamePath)\BepInEx\core\BepInEx.dll</HintPath>
     </Reference>
     <Reference Include="BepInEx.Harmony">
-      <HintPath>..\Managed\BepInEx.Harmony.dll</HintPath>
+      <HintPath>$(GamePath)\BepInEx\core\BepInEx.Harmony.dll</HintPath>
     </Reference>
     <Reference Include="BepInEx.Preloader">
-      <HintPath>..\Managed\BepInEx.Preloader.dll</HintPath>
+      <HintPath>$(GamePath)\BepInEx\core\BepInEx.Preloader.dll</HintPath>
     </Reference>
     <Reference Include="Rewired_Core">
-      <HintPath>..\Managed\Rewired_Core.dll</HintPath>
+      <HintPath>$(GamePath)\BALDI_Data\Managed\Rewired_Core.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>..\Managed\Unity.TextMeshPro.dll</HintPath>
+      <HintPath>$(GamePath)\BALDI_Data\Managed\Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>..\Managed\UnityEngine.dll</HintPath>
+      <HintPath>$(GamePath)\BALDI_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>..\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>$(GamePath)\BALDI_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>..\Managed\UnityEngine.UI.dll</HintPath>
+      <HintPath>$(GamePath)\BALDI_Data\Managed\UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
-      <HintPath>..\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+      <HintPath>$(GamePath)\BALDI_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UIModule">
-      <HintPath>..\Managed\UnityEngine.UIModule.dll</HintPath>
+      <HintPath>$(GamePath)\BALDI_Data\Managed\UnityEngine.UIModule.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Runtime">
-      <HintPath>..\Managed\Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
+      <HintPath>$(GamePath)\BALDI_Data\Managed\Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Runtime">
-      <HintPath>..\Managed\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+      <HintPath>$(GamePath)\BALDI_Data\Managed\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>
