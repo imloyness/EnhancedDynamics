@@ -35,7 +35,7 @@ You can configure some effects that you gonna see, no more need to photoshop you
 
 ## Bug Reports and Feedback
 
-If you encounter any issues or have suggestions, please report here: https://github.com/imloyness/EnhancedDynamics/issues
+If you encounter any issues or have suggestions, please report in [Github Issues](https://github.com/imloyness/EnhancedDynamics/issues)
 
 ## License
 
