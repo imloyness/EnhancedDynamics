@@ -35,7 +35,7 @@ You can configure some effects that you gonna see, no more need to photoshop you
 
 ## Bug Reports and Feedback
 
-If you encounter any issues or have suggestions, please report here: https://gitlab.com/imloyness/EnhancedDynamics/-/work_items
+If you encounter any issues or have suggestions, please report here: https://github.com/imloyness/EnhancedDynamics/issues
 
 ## License
 
@@ -43,8 +43,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Credits
 
-[ThePartynoob](https://gamebanana.com/members/1882086) - Helping out with some code
-
-[nikilolllz](https://gamebanana.com/members/4916342) - Mod idea
-
-[MikeieYT](https://gamebanana.com/members/4780379) - Post-Processing idea
+- [ThePartynoob](https://gamebanana.com/members/1882086) - Helping out with some code
+- [nikilolllz](https://gamebanana.com/members/4916342) - Mod idea
+- [MikeieYT](https://gamebanana.com/members/4780379) - Post-Processing idea
