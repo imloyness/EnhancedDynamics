@@ -51,7 +51,7 @@ namespace EnhancedDynamics.BBP
         public override void Build()
         {
             TextMeshProUGUI textMeshProUGUI = CreateText("VersionText", $"\n<color=white>ED v.{PluginInfo.PLUGIN_VERSION}</color>",
-                Vector3.zero, BaldiFonts.BoldComicSans12, TextAlignmentOptions.Center, new Vector2(300f, 30f), Color.white, false);
+                Vector3.zero, BaldiFonts.SmoothComicSans12, TextAlignmentOptions.Center, new Vector2(300f, 30f), Color.white, false);
             (textMeshProUGUI.transform as RectTransform).anchoredPosition = new Vector2(-149f, -165f);
             textMeshProUGUI.gameObject.AddComponent<Modules.RainbowText>();
 
@@ -152,13 +152,13 @@ namespace EnhancedDynamics.BBP
         private MenuToggle IdleInhale;
         private MenuToggle VerticalCamera;
         private MenuToggle DebugMode;
-        
-        
+
+
 
         public override void Build()
         {
             TextMeshProUGUI textMeshProUGUI = CreateText("VersionText", $"\n<color=white>ED v.{PluginInfo.PLUGIN_VERSION}</color>",
-                Vector3.zero, BaldiFonts.BoldComicSans12, TextAlignmentOptions.Center, new Vector2(300f, 30f), Color.white, false);
+                Vector3.zero, BaldiFonts.SmoothComicSans12, TextAlignmentOptions.Center, new Vector2(300f, 30f), Color.white, false);
             (textMeshProUGUI.transform as RectTransform).anchoredPosition = new Vector2(-149f, -165f);
             textMeshProUGUI.gameObject.AddComponent<Modules.RainbowText>();
 

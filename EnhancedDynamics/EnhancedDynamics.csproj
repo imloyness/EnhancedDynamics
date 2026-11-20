@@ -11,7 +11,7 @@
     <FileVersion></FileVersion>
 
     <!-- PUT THE GAME DIRECTORY HERE -->
-    <GamePath>D:\SteamLibrary\steamapps\common\Baldi's Basics Plus</GamePath>
+    <GamePath>/mnt/second-drive/SteamLibrary/steamapps/common/Baldi's Basics Plus/</GamePath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Cheat|AnyCPU'">
