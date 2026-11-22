@@ -9,23 +9,12 @@ A mod for Baldi's Basics Plus that enhances the game's dynamic, making the gamep
 - **Customizable FOV**
 - **Camera Effects**
 - **Camera Bobbing**
-- **Post-Processing**
 
 ## Installation
 
 1. Make sure you have [BepInEx](https://github.com/BepInEx/BepInEx) and [MTM101BaldAPI](https://gamebanana.com/mods/383711) (Optional to enable settings tab in game) installed in your Baldi's Basics Plus game
 2. Download the latest release of Enhanced Dynamics
 3. Place the `EnhancedDynamics.dll` file in your `BepInEx/plugins` folder
-
-## Configuration Options
-
-### Camera Settings:
-You can configure such things as: FOV, Bobbing, Idle Inhale, Vertical Camera and FOV Effects.
-
-### Post-Processing
-`DISCLAIMER: This category is graphically heavy to turn on. Be sure to have a computer with Discreete GPU with Vulkan or DirectX 11/12 or Metal.`
-
-You can configure some effects that you gonna see, no more need to photoshop you're thumbnails! `Graysland... /j`
 
 ## Reqirements
 

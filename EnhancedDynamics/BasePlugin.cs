@@ -63,14 +63,12 @@ namespace EnhancedDynamics
         private IEnumerator Start()
         {
             yield return null;
-
             var harmony = new Harmony(PluginInfo.PLUGIN_GUID);
 
-            yield return new WaitForSeconds(1f);
-            harmony.PatchAll(typeof(BBP.Patches.CameraPatches_BBP));
-            harmony.PatchAll(typeof(BBP.Patches.NanaPeelPatches));
-            harmony.PatchAll(typeof(BBP.Patches.PlayerMovementPatches_BBP));
-            harmony.PatchAll(typeof(BBP.Patches.VerticalCameraFeature_BBP));
+            harmony.PatchAll(typeof(Patches.CameraPatches));
+            harmony.PatchAll(typeof(Patches.NanaPeelPatches));
+            harmony.PatchAll(typeof(Patches.PlayerMovementPatches));
+            harmony.PatchAll(typeof(Patches.VerticalCameraFeature));
             if (Chainloader.PluginInfos.ContainsKey("mtm101.rulerp.bbplus.baldidevapi"))
             {
                 logsblablabla.LogInfo("Enhanced Dynamics | MTM101BaldAPI detected, adding OptionsAPI integration.");
