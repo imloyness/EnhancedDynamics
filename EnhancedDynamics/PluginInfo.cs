@@ -4,7 +4,7 @@ namespace EnhancedDynamics
     {
         public const string PLUGIN_GUID = "imloyness.enhanced.dynamics";
         public const string PLUGIN_NAME = "Enhanced Dynamics";
-        public const string PLUGIN_VERSION = "1.2.0";
+        public const string PLUGIN_VERSION = "1.2.1";
         public const bool isTest = true;
     }
 }

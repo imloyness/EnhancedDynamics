@@ -1,4 +1,8 @@
-﻿using MTM101BaldAPI.UI;
+﻿// ============================================================
+// THIS IS ONLY A PLACEHOLDER, NOTHING WORKS AS INTENDED FOR NOW
+// =============================================================
+
+using MTM101BaldAPI.UI;
 using TMPro;
 using UnityEngine;
 
@@ -12,9 +16,9 @@ namespace EnhancedDynamics.BBP
             Canvas debugCanvas = UIHelpers.CreateBlankUIScreen("ED_DebugUI", true, true);
 
             debugText = UIHelpers.CreateText<TextMeshProUGUI>(
-                    BaldiFonts.BoldComicSans12, 
-                    "Initializing...", 
-                    debugCanvas.transform, 
+                    BaldiFonts.BoldComicSans12,
+                    "Initializing...",
+                    debugCanvas.transform,
                     Vector3.zero
                 );
                 debugText.alignment = TextAlignmentOptions.BottomLeft;
@@ -27,7 +31,7 @@ namespace EnhancedDynamics.BBP
             void Update()
             {
                 string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-        
+
                 debugText.text = $"<color=#FFFFFF80>ED v.{PluginInfo.PLUGIN_VERSION}</color>\n" +
                                  $"Scene: <color=#FFFF00>{sceneName}</color>\n";
             }

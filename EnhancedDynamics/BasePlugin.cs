@@ -25,14 +25,6 @@ namespace EnhancedDynamics
         public static ConfigEntry<bool> idleinhaleToggle;
         public static ConfigEntry<bool> VerticalCameraToggle;
 
-        public static ConfigEntry<bool> PostProcessingToggle;
-        public static ConfigEntry<int> BloomIntensity;
-        public static ConfigEntry<int> VignetteIntensity;
-        public static ConfigEntry<int> MotionBlurIntensity;
-        
-        public static ConfigEntry<int> ChromaticAberrationIntensity;
-        public static ConfigEntry<int> GrainIntensity;
-
         //public static ConfigEntry<bool> FootstepSoundsToggle;
 
         public static ConfigEntry<bool> DebugModeToggle;
@@ -56,13 +48,6 @@ namespace EnhancedDynamics
             idleinhaleToggle = Config.Bind("Camera", "Idle Inhale Toggle", true, "Enable/Disable Idle Inhale Animation (Requires Camera Bobbing to be enabled.)");
             VerticalCameraToggle = Config.Bind("Camera", "Vertical Camera Toggle", true, "Enable/Disable Vertical Camera");
 
-            PostProcessingToggle = Config.Bind("PostProcessing", "Post Processing Toggle", true, "Enable/Disable Graphical Enhancments.");
-            BloomIntensity = Config.Bind("PostProcessing", "Bloom Intensity", 1, "Strength of the bloom/glow effect");
-            VignetteIntensity = Config.Bind("PostProcessing", "Vignette Intensity", 1, "Darkens the screen edges");
-            ChromaticAberrationIntensity = Config.Bind("PostProcessing", "Chromatic Aberration", 2, "Color fringing effect");
-            GrainIntensity = Config.Bind("PostProcessing", "Film Grain", 2, "Film grain intensity");
-            MotionBlurIntensity = Config.Bind("PostProcessing", "Motion Blur", 2, "Motion Blur intensity");
-
             //FootstepSoundsToggle = Config.Bind("Audio", "Footstep Sounds Toggle", true, "Enable/Disable Footstep Sounds");
 
             DebugModeToggle = Config.Bind("Debug", "Debug Mode Toggle", PluginInfo.isTest, "funsies");
@@ -72,13 +57,7 @@ namespace EnhancedDynamics
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-
-            if (GameDetector.whatbbgame_ED == "bbp" && scene.name == "Game")
-            {
-                //logsblablabla.LogInfo("trying to apply ui");
-                //UnityEngine.Debug.Log($"Detected scene load: {scene.name}");
-                //BBP.DebugUI.ApplyDebugUI();
-            }
+            //elephant hit
         }
 
         private IEnumerator Start()
@@ -87,29 +66,15 @@ namespace EnhancedDynamics
 
             var harmony = new Harmony(PluginInfo.PLUGIN_GUID);
 
-            GameDetector.DetectGame();
-            if (GameDetector.whatbbgame_ED == "bbp")
+            yield return new WaitForSeconds(1f);
+            harmony.PatchAll(typeof(BBP.Patches.CameraPatches_BBP));
+            harmony.PatchAll(typeof(BBP.Patches.NanaPeelPatches));
+            harmony.PatchAll(typeof(BBP.Patches.PlayerMovementPatches_BBP));
+            harmony.PatchAll(typeof(BBP.Patches.VerticalCameraFeature_BBP));
+            if (Chainloader.PluginInfos.ContainsKey("mtm101.rulerp.bbplus.baldidevapi"))
             {
-                yield return new WaitForSeconds(1f);
-                harmony.PatchAll(typeof(BBP.Patches.CameraPatches_BBP));
-                harmony.PatchAll(typeof(BBP.Patches.NanaPeelPatches));
-                harmony.PatchAll(typeof(BBP.Patches.PlayerMovementPatches_BBP));
-                harmony.PatchAll(typeof(BBP.Patches.VerticalCameraFeature_BBP));
-                harmony.PatchAll(typeof(BBP.PostProcessing_BBP));
-                if (Chainloader.PluginInfos.ContainsKey("mtm101.rulerp.bbplus.baldidevapi"))
-                {
-                    logsblablabla.LogInfo("Enhanced Dynamics | MTM101BaldAPI detected, adding OptionsAPI integration.");
-                    BBP.MTMBald101APIIntegration.TryIntegrate();
-                }
-                BBP.PostProcessing_BBP.Initialize();
-            }
-            if (GameDetector.whatbbgame_ED == "bbcr")
-            {
-                logsblablabla.LogWarning("Enhanced Dynamics | This plugin does not yet support BBCR, skip");
-            }
-            else if (GameDetector.whatbbgame_ED == "bbieal")
-            {
-                logsblablabla.LogWarning("Enhanced Dynamics | This plugin does not yet support BBIEAL, skip");
+                logsblablabla.LogInfo("Enhanced Dynamics | MTM101BaldAPI detected, adding OptionsAPI integration.");
+                BBP.MTMBald101APIIntegration.TryIntegrate();
             }
 
             logsblablabla.LogInfo("Enhanced Dynamics | " + PluginInfo.PLUGIN_NAME + " v." + PluginInfo.PLUGIN_VERSION + " | hi");

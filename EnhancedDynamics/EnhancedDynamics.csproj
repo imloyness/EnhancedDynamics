@@ -2,46 +2,30 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>EnhancedDynamics</AssemblyName>
-    <Description>Enhance your camera dynamics and much more with this mod!</Description>
-    <Version>1.2.0</Version>
+    <Description>Enhance your camera dynamics with this mod!</Description>
+    <Version>1.2.1</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
-    <Configurations>Debug;Release;Cheat</Configurations>
-    <AssemblyVersion></AssemblyVersion>
-    <FileVersion></FileVersion>
+    <Configurations>Debug;Release</Configurations>
 
-    <!-- PUT THE GAME DIRECTORY HERE -->
     <GamePath>/mnt/second-drive/SteamLibrary/steamapps/common/Baldi's Basics Plus/</GamePath>
+
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Cheat|AnyCPU'">
-    <Optimize>True</Optimize>
-  </PropertyGroup>
-
-  <!-- build this here right into my game folder -->
   <Target Name="PostBuildCopy" AfterTargets="Build">
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="..\.github\Releases"/>
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(GamePath)\BepInEx\plugins\"/>
   </Target>
 
   <ItemGroup>
-    <!-- some stuff added by myself -->
-    <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.2" PrivateAssets="all" />
     <Reference Include="MTM101BaldAPI">
       <HintPath>$(GamePath)\BepInEx\plugins\MTM101BaldAPI.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>$(GamePath)\BepInEx\plugins\Newtonsoft.Json.dll</HintPath>
-    </Reference>
 
+    <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.2" PrivateAssets="all" />
     <Reference Include="$(GamePath)\BALDI_Data\Managed\Assembly-CSharp.dll" Publicize="true" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
-    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all" />
-  </ItemGroup>
-
-  <!-- bbp dependencies stuff -->
   <ItemGroup>
     <Reference Include="0Harmony">
       <HintPath>$(GamePath)\BepInEx\core\0Harmony.dll</HintPath>

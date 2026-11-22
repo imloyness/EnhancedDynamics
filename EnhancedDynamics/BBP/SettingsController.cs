@@ -12,10 +12,6 @@ namespace EnhancedDynamics.BBP
         public bool cameraBobbingToggle;
         public bool idleInhaleToggle;
         public bool verticalCameraToggle;
-        public bool postProcessingToggle;
-        public int bloomValue;
-        public int vignetteValue;
-        public int motionblurValue;
 
         public int fovValue;
         public int cameraBobbingIntensity;
@@ -30,112 +26,6 @@ namespace EnhancedDynamics.BBP
             fovValue = BasePlugin.FOVValue.Value;
             cameraBobbingIntensity = BasePlugin.CameraBobbingIntensity.Value;
             debugModeToggle = BasePlugin.DebugModeToggle.Value;
-            postProcessingToggle = BasePlugin.PostProcessingToggle.Value;
-            bloomValue = BasePlugin.BloomIntensity.Value;
-            vignetteValue = BasePlugin.VignetteIntensity.Value;
-            motionblurValue = BasePlugin.MotionBlurIntensity.Value;
-        }
-    }
-
-    public class PostProcessingSettings : CustomOptionsCategory
-    {
-        private readonly List<GameObject> pages = new();
-        private int currentPageIndex = 0;
-        private TextMeshProUGUI pageIndicatorText;
-
-        private MenuToggle PostProcessing;
-        private AdjustmentBars BloomBar;
-        private AdjustmentBars VignetteBar;
-        private AdjustmentBars MotionBlurBar;
-
-        public override void Build()
-        {
-            TextMeshProUGUI textMeshProUGUI = CreateText("VersionText", $"\n<color=white>ED v.{PluginInfo.PLUGIN_VERSION}</color>",
-                Vector3.zero, BaldiFonts.SmoothComicSans12, TextAlignmentOptions.Center, new Vector2(300f, 30f), Color.white, false);
-            (textMeshProUGUI.transform as RectTransform).anchoredPosition = new Vector2(-149f, -165f);
-            textMeshProUGUI.gameObject.AddComponent<Modules.RainbowText>();
-
-            GameObject page = new("PostProcessingPage");
-            page.transform.SetParent(transform, false);
-            page.transform.localPosition = Vector3.zero;
-            pages.Add(page);
-
-            PostProcessing = CreateNewToggle("postProcessingToggle", "Toggle", "DISCLAIMER: This setting will cause lags on low-end computers, be sure to have a good computer for that.", 6);
-            PostProcessing.transform.SetParent(page.transform, true);
-
-            MotionBlurBar = CreateNewBar("MotionBlurIntensity", "Motion Blur", "Adjust how smooth frames are", 2, 5, Color.black);
-            MotionBlurBar.transform.SetParent(page.transform, true);
-
-            BloomBar = CreateNewBar("bloomIntensity", "Bloom", "Adjust the glow intensity", 3, 5, Color.black);
-            BloomBar.transform.SetParent(page.transform, true);
-
-            VignetteBar = CreateNewBar("vignetteIntensity", "Vignette", "Adjust edge darkening", 4, 5, Color.black);
-            VignetteBar.transform.SetParent(page.transform, true);
-
-
-            PostProcessing.Set(DefaultGeneralSettings.Instance.postProcessingToggle);
-            BloomBar.Adjust(DefaultGeneralSettings.Instance.bloomValue);
-            VignetteBar.Adjust(DefaultGeneralSettings.Instance.vignetteValue);
-            MotionBlurBar.Adjust(DefaultGeneralSettings.Instance.motionblurValue);
-
-            page.SetActive(true);
-
-            CreateButton(() => SwitchPage(-1), menuArrowLeft, menuArrowLeftHighlight, "PrevPage", new Vector3(-75f, -150f, 0f));
-            CreateButton(() => SwitchPage(1), menuArrowRight, menuArrowRightHighlight, "NextPage", new Vector3(75f, -150f, 0f));
-
-            pageIndicatorText = CreateText("PageIndicator", $"Page {currentPageIndex + 1}/{pages.Count}", new Vector3(0f, -150f, 0f),
-                BaldiFonts.ComicSans24, TextAlignmentOptions.Center, new Vector2(200f, 32f), Color.black, false);
-        }
-
-        private void SwitchPage(int delta)
-        {
-            pages[currentPageIndex].SetActive(false);
-            currentPageIndex = (currentPageIndex + delta + pages.Count) % pages.Count;
-            pages[currentPageIndex].SetActive(true);
-
-            if (pageIndicatorText != null)
-            {
-                pageIndicatorText.text = $"Page {currentPageIndex + 1}/{pages.Count}";
-            }
-        }
-
-        public void SendData()
-        {
-            BasePlugin.PostProcessingToggle.Value = PostProcessing.Value;
-            BasePlugin.VignetteIntensity.Value = VignetteBar.GetRaw();
-            BasePlugin.BloomIntensity.Value = BloomBar.GetRaw();
-            BasePlugin.MotionBlurIntensity.Value = MotionBlurBar.GetRaw();
-
-            PostProcessing_BBP.RefreshEffects();
-        }
-
-        public AdjustmentBars CreateNewBar(string id, string name, string tooltipKey, int order, int length, Color textColor)
-        {
-            Vector3 originVec = new(90f, 70f, 0f);
-            var bar = CreateBars(SendData, id, originVec + new Vector3(-30, order * -29.5f, 0), length);
-
-            TextMeshProUGUI textObj = CreateText(id + "_text", name, originVec + new Vector3(-175, order * -28, 0),
-                BaldiFonts.ComicSans24, TextAlignmentOptions.Right, new Vector2(250, 10), textColor, false);
-            textObj.transform.SetParent(bar.transform, true);
-
-            AddTooltip(bar, tooltipKey);
-
-            Transform region = toolTipHotspot?.Find(bar.name + "Region");
-            if (region != null) region.SetParent(bar.transform, true);
-
-            return bar;
-        }
-
-        public MenuToggle CreateNewToggle(string id, string name, string tooltipKey, int order)
-        {
-            Vector3 originVec = new(90f, 85f, 0f);
-            var toggle = CreateToggle(id, name, false, originVec + new Vector3(0, order * -29.5f, 0), 250f);
-            AddTooltip(toggle, tooltipKey);
-
-            var hotspotButton = toggle.transform.Find("HotSpot")?.GetComponent<StandardMenuButton>();
-            hotspotButton?.OnPress.AddListener(SendData);
-
-            return toggle;
         }
     }
 
@@ -153,12 +43,10 @@ namespace EnhancedDynamics.BBP
         private MenuToggle VerticalCamera;
         private MenuToggle DebugMode;
 
-
-
         public override void Build()
         {
             TextMeshProUGUI textMeshProUGUI = CreateText("VersionText", $"\n<color=white>ED v.{PluginInfo.PLUGIN_VERSION}</color>",
-                Vector3.zero, BaldiFonts.SmoothComicSans12, TextAlignmentOptions.Center, new Vector2(300f, 30f), Color.white, false);
+                Vector3.zero, BaldiFonts.ComicSans12, TextAlignmentOptions.Center, new Vector2(300f, 30f), Color.white, false);
             (textMeshProUGUI.transform as RectTransform).anchoredPosition = new Vector2(-149f, -165f);
             textMeshProUGUI.gameObject.AddComponent<Modules.RainbowText>();
 
