@@ -1,0 +1,150 @@
+using HarmonyLib;
+using Rewired;
+using UnityEngine;
+
+namespace EnhancedDynamics.Patches
+{
+    [HarmonyPatch]
+    public static class CameraPatches
+    {
+        // FOV parameters
+        public static float baseFOV => BasePlugin.FOVValue.Value;
+        public static float convertedFOV;
+        public static float UpdateFOV;
+        public static float transitionProgress = 0f;
+        public static float currentTargetFOV;
+        public static float startFOV;
+        private static float defaultLerpSpeed = 3f;
+
+        // Camera bobbing parameters
+        public static float bobbingSpeed = 5f;
+        public static float bobbingSpeedConverted;
+        public static float convertedBobAm;
+        public static float bobbingAmount = BasePlugin.CameraBobbingIntensity.Value;
+        public static float sprintBobbingMultiplier = 1.5f;
+        public static float timer = 0f;
+        public static Vector3 lastBobOffset = Vector3.zero;
+
+        // Idle inhale parameters
+        public static float idleInhaleTimer = 0f;
+        public static float idleInhaleSpeed = 1.5f;
+        public static float lastIdleOffset = 0f;
+        public static float idleTransitionSpeed = 8f;
+
+        //toggles
+        public static bool toggleFOV => BasePlugin.FOVToggle.Value;
+        public static bool toggleCameraBobbing => BasePlugin.CameraBobbingToggle.Value;
+        public static bool toggleIdleInhale => BasePlugin.idleinhaleToggle.Value;
+
+        public static Vector3 CalculateBobOffset(float cameraYRotation)
+        {
+            float horizontalBob = Mathf.Sin(timer * bobbingSpeedConverted) * convertedBobAm;
+            float verticalBob = Mathf.Cos(timer * bobbingSpeedConverted * 2f) * convertedBobAm * 0.5f;
+
+            float angleRad = cameraYRotation * Mathf.Deg2Rad;
+
+            float rotatedX = horizontalBob * Mathf.Cos(angleRad);
+            float rotatedZ = horizontalBob * Mathf.Sin(angleRad);
+
+            return new Vector3(rotatedX, verticalBob, rotatedZ);
+        }
+
+        public static float CalculateIdleInhale()
+        {
+            return Mathf.Sin(idleInhaleTimer * idleInhaleSpeed) * (convertedBobAm * 0.2f);
+        }
+
+        public static void SetFOV(Camera cameraToChange, Camera billboardCamera, float TargetFOV, float LerpSpeed)
+        {
+            if (currentTargetFOV != TargetFOV)
+            {
+                currentTargetFOV = TargetFOV;
+                transitionProgress = 0f;
+                startFOV = UpdateFOV;
+            }
+
+            if (transitionProgress < 1f && !Mathf.Approximately(UpdateFOV, TargetFOV))
+            {
+                transitionProgress = Mathf.Min(transitionProgress + LerpSpeed * Time.deltaTime, 1f);
+                float smoothProgress = Mathf.Sin(transitionProgress * Mathf.PI * 0.5f);
+                UpdateFOV = Mathf.Lerp(startFOV, TargetFOV, smoothProgress);
+            }
+
+            cameraToChange.fieldOfView = UpdateFOV;
+            billboardCamera.fieldOfView = UpdateFOV;
+        }
+
+        [HarmonyPatch(typeof(GameCamera), "LateUpdate")]
+        [HarmonyPostfix]
+        public static void Postfix0(GameCamera __instance)
+        {
+            convertedFOV = (baseFOV + 1) * 30f;
+            convertedBobAm = (bobbingAmount + 1) * 0.25f;
+
+            // so camera in elevator doesn't freak out and being 0
+            if (UpdateFOV == 0f)
+            {
+                UpdateFOV = convertedFOV;
+                startFOV = convertedFOV;
+                currentTargetFOV = convertedFOV;
+            }
+
+            // FOV Transition Logic
+            bool isRunning = Singleton<InputManager>.Instance.GetDigitalInput("Run", false);
+            if (toggleFOV && isRunning && __instance.Controllable && !BasePlugin.FrozenState_ED && !BasePlugin.SlippingState_ED && BasePlugin.Stamina_ED > 0)
+            {
+                SetFOV(__instance.camCom, __instance.billboardCam, convertedFOV * 1.2f, defaultLerpSpeed);
+            }
+            else
+            {
+                SetFOV(__instance.camCom, __instance.billboardCam, convertedFOV, defaultLerpSpeed);
+            }
+
+            // Camera Bobbing Logic
+            if (toggleCameraBobbing && __instance.Controllable && !BasePlugin.FrozenState_ED && !BasePlugin.SlippingState_ED)
+            {
+                // ReInput cooking
+                float moveX = ReInput.players.GetPlayer(0).GetAxis("MovementX");
+                float moveY = ReInput.players.GetPlayer(0).GetAxis("MovementY");
+                bool isMoving = Mathf.Abs(moveX) > 0.1f || Mathf.Abs(moveY) > 0.1f;
+
+                if (isMoving)
+                {
+                    bobbingSpeedConverted = bobbingSpeed; // if i ever find out how do i grab velocity normally
+                    timer += Time.deltaTime * (isRunning && BasePlugin.Stamina_ED > 0 ? sprintBobbingMultiplier : 1f);
+                    float cameraYRotation = __instance.transform.eulerAngles.y;
+                    Vector3 targetBobOffset = CalculateBobOffset(cameraYRotation);
+                    lastBobOffset = Vector3.Lerp(lastBobOffset, targetBobOffset, Time.deltaTime * 10f);
+                    __instance.transform.position += lastBobOffset;
+                }
+                else
+                {
+                    if (lastBobOffset.magnitude > 0.001f)
+                    {
+                        lastBobOffset = Vector3.Lerp(lastBobOffset, Vector3.zero, Time.deltaTime * 5f);
+                        __instance.transform.position += lastBobOffset;
+                    }
+
+                    if (toggleIdleInhale)
+                    {
+                        idleInhaleTimer += Time.deltaTime;
+                        float targetIdleOffset = CalculateIdleInhale();
+                        lastIdleOffset = Mathf.Lerp(lastIdleOffset, targetIdleOffset, Time.deltaTime * idleTransitionSpeed);
+                        __instance.transform.position += new Vector3(0f, lastIdleOffset, 0f);
+                    }
+                    else if (lastIdleOffset != 0f)
+                    {
+                        lastIdleOffset = Mathf.Lerp(lastIdleOffset, 0f, Time.deltaTime * idleTransitionSpeed);
+                        __instance.transform.position += new Vector3(0f, lastIdleOffset, 0f);
+                    }
+                }
+            }
+            else
+            {
+                lastBobOffset = Vector3.Lerp(lastBobOffset, Vector3.zero, Time.deltaTime * 5f);
+                lastIdleOffset = Mathf.Lerp(lastIdleOffset, 0f, Time.deltaTime * 5f);
+                __instance.transform.position += lastBobOffset + new Vector3(0f, lastIdleOffset, 0f);
+            }
+        }
+    }
+}
